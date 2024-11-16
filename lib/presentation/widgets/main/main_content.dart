@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:soundify/presentation/providers/primary_widget_state_provider.dart';
 import 'package:soundify/presentation/providers/secondary_widget_state_provider.dart';
+import 'package:soundify/presentation/providers/widget_size_provider.dart';
 import '../../../core/styles/colors.dart';
 import '../../../core/utils/layout_manager.dart';
 import '../../../core/constants/app_constants.dart';
@@ -23,7 +24,7 @@ class MainContent extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: _buildPrimaryContainer(),
+            child: _buildPrimaryContainer(context),
           ),
           if (LayoutManager.shouldShowSecondaryContainer(context)) ...[
             const SizedBox(width: 12),
@@ -34,18 +35,28 @@ class MainContent extends StatelessWidget {
     );
   }
 
-  Widget _buildPrimaryContainer() {
-    return Container(
-      decoration: BoxDecoration(
-        color: primaryColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Consumer<PrimaryWidgetStateProvider>(
-        builder: (context, primaryWidgetStateProvider, child) {
-          Widget activePrimaryWidget = primaryWidgetStateProvider.currentWidget;
-          return activePrimaryWidget;
-        },
-      ),
+  Widget _buildPrimaryContainer(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Provider.of<WidgetSizeProvider>(
+            context,
+            listen: false,
+          ).updateExpandedWidth(constraints.maxWidth);
+        });
+
+        return Container(
+          decoration: BoxDecoration(
+            color: primaryColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Consumer2<WidgetSizeProvider, PrimaryWidgetStateProvider>(
+            builder: (context, widgetSizeProvider, primaryWidgetStateProvider, child) {
+              return primaryWidgetStateProvider.currentWidget;
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -64,8 +75,7 @@ class MainContent extends StatelessWidget {
         ),
         child: Consumer<SecondaryWidgetStateProvider>(
           builder: (context, secondaryWidgetStateProvider, child) {
-            Widget activeSecondaryWidget = secondaryWidgetStateProvider.currentWidget;
-            return activeSecondaryWidget;
+            return secondaryWidgetStateProvider.currentWidget;
           },
         ),
       ),
