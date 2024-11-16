@@ -10,22 +10,26 @@ class SongDetailWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        color: primaryColor,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SongCover(),
-              SongDetailWidgetHeader(screenWidth: screenWidth),
-              ArtistInfoCard(screenWidth: screenWidth),
-            ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            height: constraints.maxHeight,
+            color: primaryColor,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SongCover(),
+                  SongDetailWidgetHeader(screenWidth: screenWidth),
+                  ArtistInfoCard(screenWidth: screenWidth),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
