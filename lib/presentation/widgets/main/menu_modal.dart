@@ -1,9 +1,11 @@
 // lib/presentation/widgets/main/menu_modal.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:soundify/core/styles/colors.dart';
 import 'package:soundify/core/styles/text_styles.dart';
+import 'package:soundify/presentation/providers/primary_widget_state_provider.dart';
+import 'package:soundify/presentation/widgets/primary/add_song_widget.dart';
 
-// lib/presentation/widgets/main/menu_modal.dart
 class MenuModal extends StatelessWidget {
   final VoidCallback onClose;
 
@@ -17,7 +19,7 @@ class MenuModal extends StatelessWidget {
     return Stack(
       children: [
         _buildModalBackground(),
-        _buildModalContent(),
+        _buildModalContent(context),
       ],
     );
   }
@@ -31,7 +33,7 @@ class MenuModal extends StatelessWidget {
     );
   }
 
-  Widget _buildModalContent() {
+  Widget _buildModalContent(BuildContext context) {
     return Positioned(
       left: 12,
       top: 120,
@@ -55,14 +57,31 @@ class MenuModal extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildMenuItem(
+                context: context,
                 icon: Icons.playlist_add,
                 text: "Create Playlist",
-                onTap: onClose,
+                onTap: () {
+                  // Handle Create Playlist
+                  onClose();
+                },
               ),
               _buildMenuItem(
+                context: context,
                 icon: Icons.add,
                 text: "Add Song",
-                onTap: onClose,
+                onTap: () {
+                  Provider.of<PrimaryWidgetStateProvider>(context, listen: false)
+                      .changeWidget(
+                    AddSongWidget(
+                      onChangeWidget: (widget) {
+                        Provider.of<PrimaryWidgetStateProvider>(context, listen: false)
+                            .changeWidget(widget, 'NewWidget');
+                      },
+                    ),
+                    'AddSongWidget',
+                  );
+                  onClose();
+                },
               ),
             ],
           ),
@@ -72,6 +91,7 @@ class MenuModal extends StatelessWidget {
   }
 
   Widget _buildMenuItem({
+    required BuildContext context,
     required IconData icon,
     required String text,
     required VoidCallback onTap,
