@@ -1,7 +1,9 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:soundify/presentation/providers/primary_widget_state_provider.dart';
 import 'package:soundify/presentation/providers/secondary_widget_state_provider.dart';
+import 'package:soundify/presentation/providers/widget_size_provider.dart';
 import 'package:soundify/presentation/screens/auth/login_screen.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -21,6 +23,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => PrimaryWidgetStateProvider()),
         ChangeNotifierProvider(create: (_) => SecondaryWidgetStateProvider()),
+        ChangeNotifierProvider(create: (_) => WidgetSizeProvider()),
       ],
       child: const MyApp(),
     ),
