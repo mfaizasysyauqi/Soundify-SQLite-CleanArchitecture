@@ -1,7 +1,10 @@
 // lib/presentation/widgets/main/sidebar_widget.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:soundify/core/styles/colors.dart';
 import 'package:soundify/core/styles/text_styles.dart';
+import 'package:soundify/presentation/providers/primary_widget_state_provider.dart';
+import 'package:soundify/presentation/widgets/primary/home_widget.dart';
 
 class SidebarWidget extends StatelessWidget {
   final Function(BuildContext) onShowModal; // Updated type definition
@@ -17,7 +20,7 @@ class SidebarWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12.0),
       child: Column(
         children: [
-          _buildLogo(),
+          _buildLogo(context), // Teruskan context ke method
           Expanded(
             child: _buildSidebarContent(context),
           ),
@@ -26,11 +29,17 @@ class SidebarWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildLogo() {
+  Widget _buildLogo(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, bottom: 18.0),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          Provider.of<PrimaryWidgetStateProvider>(context, listen: false)
+              .changeWidget(
+            const HomeWidget(),
+            'AddSongWidget',
+          );
+        },
         child: const Text(
           "Soundify",
           style: TextStyle(
@@ -52,6 +61,9 @@ class SidebarWidget extends StatelessWidget {
       width: 155,
       child: Column(
         children: [
+          const SizedBox(
+            height: 1,
+          ),
           _buildMenuHeader(context),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -59,6 +71,9 @@ class SidebarWidget extends StatelessWidget {
           ),
           Expanded(
             child: _buildPlaylistSection(),
+          ),
+          const SizedBox(
+            height: 1,
           ),
         ],
       ),
