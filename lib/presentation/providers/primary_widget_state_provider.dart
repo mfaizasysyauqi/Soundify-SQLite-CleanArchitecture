@@ -14,7 +14,6 @@ class PrimaryWidgetStateProvider with ChangeNotifier {
   void changeWidget(Widget newWidget, String name) {
     _activePrimaryWidget = newWidget;
     _primaryWidgetName = name;
-    
     notifyListeners();
   }
 }
