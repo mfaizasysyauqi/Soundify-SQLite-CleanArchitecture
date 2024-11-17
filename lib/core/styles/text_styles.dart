@@ -1,4 +1,4 @@
-
+// lib/core/styles/text_styles.dart
 import 'package:flutter/material.dart';
 
 const Color primaryTextColor = Colors.white;
@@ -17,4 +17,5 @@ const double tinyFontSize = 14;
 const double microFontSize = 12.5;
 const double nanoFontSize = 10;
 
-const FontWeight mediumWeight = FontWeight.w500;
+const FontWeight fontWeightMedium = FontWeight.w500;
+const FontWeight fontWeightBold = FontWeight.bold;
