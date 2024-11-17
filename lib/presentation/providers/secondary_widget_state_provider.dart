@@ -1,10 +1,10 @@
 // lib/presentation/providers/secondary_widget_state_provider.dart
 import 'package:flutter/material.dart';
-import 'package:soundify/presentation/widgets/secondary/song_detail_widget.dart';
+import 'package:soundify/presentation/screens/app/secondary/song_detail/song_detail_screen.dart';
 
 class SecondaryWidgetStateProvider with ChangeNotifier {
-  Widget _activeSecondaryWidget = const SongDetailWidget(); // Default widget
-  String _secondaryWidgetName = 'SongDetailWidget'; // Nama widget untuk melacak
+  Widget _activeSecondaryWidget = const SongDetailScreen(); // Default widget
+  String _secondaryWidgetName = 'SongDetailScreen'; // Nama widget untuk melacak
 
   // Getter untuk mendapatkan widget saat ini
   Widget get currentWidget => _activeSecondaryWidget;
