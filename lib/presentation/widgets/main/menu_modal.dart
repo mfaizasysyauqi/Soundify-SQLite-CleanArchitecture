@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:soundify/core/styles/colors.dart';
 import 'package:soundify/core/styles/text_styles.dart';
 import 'package:soundify/presentation/providers/primary_widget_state_provider.dart';
-import 'package:soundify/presentation/widgets/primary/add_song_widget.dart';
+import 'package:soundify/presentation/screens/app/primary/add/add_song_screen.dart';
 
 class MenuModal extends StatelessWidget {
   final VoidCallback onClose;
@@ -72,13 +72,13 @@ class MenuModal extends StatelessWidget {
                 onTap: () {
                   Provider.of<PrimaryWidgetStateProvider>(context, listen: false)
                       .changeWidget(
-                    AddSongWidget(
+                    AddSongScreen(
                       onChangeWidget: (widget) {
                         Provider.of<PrimaryWidgetStateProvider>(context, listen: false)
                             .changeWidget(widget, 'NewWidget');
                       },
                     ),
-                    'AddSongWidget',
+                    'AddSongScreen',
                   );
                   onClose();
                 },
