@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:soundify/core/styles/colors.dart';
 import 'package:soundify/core/styles/text_styles.dart';
 import 'package:soundify/presentation/screens/auth/register_screen.dart';
-import 'package:soundify/presentation/screens/main_screen.dart';
+import 'package:soundify/presentation/screens/app/main_screen.dart';
 import 'package:soundify/presentation/widgets/common/custom_button.dart';
 import 'package:soundify/presentation/widgets/common/custom_text_field.dart';
 
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => const MainScreen(
-           
+
             ),
           ),
         );
