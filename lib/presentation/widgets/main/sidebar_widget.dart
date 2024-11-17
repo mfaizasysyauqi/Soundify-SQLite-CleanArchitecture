@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:soundify/core/styles/colors.dart';
 import 'package:soundify/core/styles/text_styles.dart';
 import 'package:soundify/presentation/providers/primary_widget_state_provider.dart';
-import 'package:soundify/presentation/widgets/primary/home_widget.dart';
+import 'package:soundify/presentation/screens/app/primary/home/home_screen.dart';
+import 'package:soundify/presentation/screens/app/primary/liked/liked_song_screen.dart';
 
 class SidebarWidget extends StatelessWidget {
   final Function(BuildContext) onShowModal; // Updated type definition
@@ -36,8 +37,8 @@ class SidebarWidget extends StatelessWidget {
         onPressed: () {
           Provider.of<PrimaryWidgetStateProvider>(context, listen: false)
               .changeWidget(
-            const HomeWidget(),
-            'AddSongWidget',
+            const HomeScreen(),
+            'HomeScreen',
           );
         },
         child: const Text(
@@ -70,7 +71,7 @@ class SidebarWidget extends StatelessWidget {
             child: Divider(color: primaryTextColor),
           ),
           Expanded(
-            child: _buildPlaylistSection(),
+            child: _buildPlaylistSection(context),
           ),
           const SizedBox(
             height: 1,
@@ -110,14 +111,20 @@ class SidebarWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaylistSection() {
+  Widget _buildPlaylistSection(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Provider.of<PrimaryWidgetStateProvider>(context, listen: false)
+                    .changeWidget(
+                  const LikedSongScreen(),
+                  'LikedSongScreen',
+                );
+              },
               child: Container(
                 height: 40,
                 color: primaryColor,
@@ -128,7 +135,7 @@ class SidebarWidget extends StatelessWidget {
                       child: Container(
                         width: 35,
                         height: 35,
-                        color: secondaryColor,
+                        color: senaryColor,
                         child: Icon(
                           Icons.favorite,
                           color: primaryColor,
